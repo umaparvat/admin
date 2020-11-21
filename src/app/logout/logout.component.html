@@ -1,0 +1,35 @@
+<div class="container">
+    <!-- Modal -->
+<div class="modal fade"  id="elegantModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+  <!--Content-->
+  <div class="modal-content form-elegant">
+    <!--Header-->
+    <div class="modal-header text-center">
+      <h3 class="modal-title w-100 dark-grey-text font-weight-bold my-3" id="myModalLabel"><strong>Do you wish to logout?</strong></h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closebutton>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <!--Body-->
+    <div class="modal-body mx-4">
+      <!--Body-->
+      <!-- <div class="md-form mb-5">
+        <label data-error="wrong" data-success="right" for="logout">Do you wish to logout?</label>
+      </div> -->
+
+      <div class="text-center mb-3">
+        <button type="button" class="btn btn-primary btn-block btn-rounded z-depth-1a" 
+        (click)="logout()">Log out</button>
+      </div>
+
+    </div>
+    <!--Footer-->
+
+  </div>
+  <!--/.Content-->
+</div>
+</div>
+<!-- Modal -->
+</div>

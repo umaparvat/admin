@@ -1,8 +1,11 @@
-import { Component, OnInit, OnChanges, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnChanges, Output, ChangeDetectionStrategy, EventEmitter } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap} from "@angular/router";
 import {Form, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import  {MessageService} from "./_services/message.service";
+import {UserComponent} from "./user/user.component";
+import {LogoutComponent} from "./logout/logout.component";
+import {AuthService} from "./_services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -10,17 +13,27 @@ import  {MessageService} from "./_services/message.service";
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+  username: string = "Login";
   @Output() title = 'Files-Admin';
   regionform: FormGroup;
   @Output() region: any = "eu-fr-paris";
-   constructor(private router: Router, private fb: FormBuilder, private messageService: MessageService) {
+  @Output() loggedin: EventEmitter<any> = new EventEmitter<any>(); 
+   constructor(private router: Router, private fb: FormBuilder,
+     private messageService: MessageService, 
+     private modalService: NgbModal, private authService:AuthService) {
      this.sendMessage({'title': this.title});
 
    }
    ngOnInit(): void {
      this.regionform = this.fb.group(
        {regions: ['', [Validators.required]]}
+
      )
+     this.authService.getEmitter().subscribe((customObject) => { 
+      console.log("Component is notified of successfull login!");
+      console.log(customObject) ;
+      this.username = customObject
+    });
 
      this.regionform.valueChanges.subscribe(forms => {
        console.log("form value is", JSON.stringify(forms))
@@ -49,4 +62,15 @@ export class AppComponent implements OnInit {
    onChangeofOptions(event: any) {
 
    }
+   openLoginForm() {
+    
+    if (this.username == 'Login') {
+      console.log(this.username)
+      const modalRef = this.modalService.open(UserComponent);
+   } else {
+     console.log("in else", this.username)
+     const modalRef = this.modalService.open(LogoutComponent);
+   }
+   }
+
 }
